@@ -9,6 +9,9 @@ use yii\widgets\DetailView;
 $this->title = $model->title;
 $this->params['breadcrumbs'][] = ['label' => 'Code Contents', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
+
+$this->registerCssFile('@web/assets/highlight/styles/monokai-sublime.css', ['depends' => ['yii\bootstrap\BootstrapAsset']]);
+$this->registerJsFile('@web/script/code_block.js',['depends'=>['yii\web\JqueryAsset']]); 
 ?>
 <div class="code-content-view">
 
@@ -24,18 +27,16 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
         ]) ?>
     </p>
-
-    <?= DetailView::widget([
+<?php echo $model->content; ?>
+    <!-- DetailView::widget([
         'model' => $model,
         'attributes' => [
             'id',
             'code_type',
             'title',
             'content:ntext',
-            'user_id',
-            'create_time',
-            'modify_time',
         ],
-    ]) ?>
+    ]) -->
 
 </div>
+<script type="text/javascript" src="<?php echo  Yii::$app->request->baseUrl;?>/assets/highlight/highlight_pack.js"></script>
