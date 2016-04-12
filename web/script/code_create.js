@@ -14,7 +14,7 @@ $(function(){
 	  }
 	});
 
-	$("#codecontent-content").bind("keyup", function(e){
+	/*$("#codecontent-content").bind("keyup", function(e){
 
 	  // 替换字符串
 	  var txt_all = $(this).val().replace(/</g, "&lt;")
@@ -27,5 +27,5 @@ $(function(){
 
 	  $(this).val(txt_all);
 	  
-	});
+	});*/
 });
