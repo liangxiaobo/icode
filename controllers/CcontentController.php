@@ -5,6 +5,7 @@ namespace app\controllers;
 use Yii;
 use app\models\CodeContent;
 use app\models\CcontentSearch;
+use app\models\CodeType;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -68,8 +69,11 @@ class CcontentController extends Controller
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
+            $ctype_models = CodeType::find()->all();
+
             return $this->render('create', [
-                'model' => $model,
+                'model' => $model, 
+                'ctype_models' => $ctype_models,
             ]);
         }
     }
