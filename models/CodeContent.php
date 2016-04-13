@@ -25,6 +25,28 @@ class CodeContent extends \yii\db\ActiveRecord
         return 'code_content';
     }
 
+    public function init()
+    {
+        parent::init();
+    }
+
+    public function beforeSave(){
+
+        if ($this->isNewRecord) {
+            $this->create_time = date('Y-m-d H:i:s');
+             // return true;
+        }
+
+        $this->modify_time = date('Y-m-d H:i:s');
+
+        return true;
+    }
+
+    public function getCodeType()
+    {
+        return $this->hasOne(CodeType::className(), ['id' => 'code_type']);
+    }
+
     /**
      * @inheritdoc
      */

@@ -1,6 +1,7 @@
 <?php
 
 use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\grid\GridView;
 
 /* @var $this yii\web\View */
@@ -9,30 +10,34 @@ use yii\grid\GridView;
 
 $this->title = 'Code Contents';
 $this->params['breadcrumbs'][] = $this->title;
+// echo time();
 ?>
 <div class="code-content-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
-
-    <p>
-        <?= Html::a('Create Code Content', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-
             'id',
-            'code_type',
-            'title',
-            'content:ntext',
-            'user_id',
-            // 'create_time',
-            // 'modify_time',
-
+            [
+                'attribute' => 'code_type',
+                'label' => '所属',
+                'value' => function ($model){
+                    return $model->codeType->name;
+                }
+            ],
+            [
+                'attribute' => 'title',
+                'label' => '标题',
+                // 'type' => 'html',
+                'format' => 'raw',
+                'value' => function ($model){
+                    return Html::a($model->title, Url::toRoute(['/ccontent/view', 'id' => $model->id]));
+                }
+            ],
+            'create_time',
+            'modify_time',
             ['class' => 'yii\grid\ActionColumn'],
+            //'content:ntext',
         ],
     ]); ?>
 </div>

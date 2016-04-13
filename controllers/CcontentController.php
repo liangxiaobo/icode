@@ -3,6 +3,7 @@
 namespace app\controllers;
 
 use Yii;
+use yii\filters\AccessControl;
 use app\models\CodeContent;
 use app\models\CcontentSearch;
 use app\models\CodeType;
@@ -21,6 +22,17 @@ class CcontentController extends Controller
     public function behaviors()
     {
         return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'only' => ['adminIndex', 'create', 'update'],
+                'rules' => [
+                    [
+                        'actions' => ['adminIndex', 'create', 'update'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -38,8 +50,29 @@ class CcontentController extends Controller
     {
         $searchModel = new CcontentSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider->pagination->defaultPageSize =10;
+
+        // $obj = new CodeContent;
+        // $obj->code_type = 1;
+        // var_dump($obj->codeType);
+        // exit;
 
         return $this->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    /**
+     * Lists all CodeContent models.
+     * @return mixed
+     */
+    public function actionAdminIndex()
+    {
+        $searchModel = new CcontentSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        return $this->render('adminIndex', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
