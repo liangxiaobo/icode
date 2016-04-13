@@ -91,8 +91,11 @@ class CcontentController extends Controller
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
+            $ctype_models = CodeType::find()->all();
+
             return $this->render('update', [
                 'model' => $model,
+                'ctype_models' => $ctype_models,
             ]);
         }
     }

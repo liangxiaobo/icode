@@ -7,6 +7,9 @@ use yii\helpers\ArrayHelper;
 /* @var $this yii\web\View */
 /* @var $model app\models\CodeContent */
 /* @var $form yii\widgets\ActiveForm */
+
+$this->registerCssFile('@web/assets/highlight/styles/monokai-sublime.css'); 
+$this->registerJsFile('@web/script/code_create.js',['depends'=>['yii\web\JqueryAsset']]);
 ?>
 
 <div class="code-content-form">
@@ -26,3 +29,4 @@ use yii\helpers\ArrayHelper;
     <?php ActiveForm::end(); ?>
 
 </div>
+<script type="text/javascript" src="<?php echo  Yii::$app->request->baseUrl;?>/assets/highlight/highlight_pack.js"></script>
